@@ -1,2 +1,3 @@
 source;share/hover_diffdrive/environment/ament_prefix_path.sh
+source;share/hover_diffdrive/environment/library_path.sh
 source;share/hover_diffdrive/environment/path.sh

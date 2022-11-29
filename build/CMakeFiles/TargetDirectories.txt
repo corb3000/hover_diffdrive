@@ -1,5 +1,6 @@
 /home/corb3/dev/goose_dev_ws/src/hover_diffdrive/build/CMakeFiles/uninstall.dir
 /home/corb3/dev/goose_dev_ws/src/hover_diffdrive/build/CMakeFiles/hover_diffdrive_uninstall.dir
+/home/corb3/dev/goose_dev_ws/src/hover_diffdrive/build/CMakeFiles/hover_diffdrive.dir
 /home/corb3/dev/goose_dev_ws/src/hover_diffdrive/build/CMakeFiles/test.dir
 /home/corb3/dev/goose_dev_ws/src/hover_diffdrive/build/CMakeFiles/edit_cache.dir
 /home/corb3/dev/goose_dev_ws/src/hover_diffdrive/build/CMakeFiles/rebuild_cache.dir

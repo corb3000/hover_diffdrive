@@ -8,7 +8,8 @@
             "includePath": [
                 "/opt/ros/humble/include/**",
                 "/home/corb3/dev/goose_dev_ws/src/hover_diffdrive/include/**",
-                "/usr/include/**"
+                "/usr/include/**",
+                "${workspaceFolder}/include"
             ],
             "name": "ROS",
             "intelliSenseMode": "gcc-x64",

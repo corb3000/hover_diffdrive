@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(ros2_control_demo_hardware)
+project( hover_diffdrive)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -43,10 +43,10 @@ ament_target_dependencies(
 
 # Causes the visibility macros to use dllexport rather than dllimport,
 # which is appropriate when building the dll but not consuming it.
-target_compile_definitions(${PROJECT_NAME} PRIVATE "ROS2_CONTROL_DEMO_HARDWARE_BUILDING_DLL")
+target_compile_definitions(${PROJECT_NAME} PRIVATE " HOVER_DIFFDRIVE_BUILDING_DLL")
 
 # Export hardware pligins
-pluginlib_export_plugin_description_file(hardware_interface ros2_control_demo_hardware.xml)
+pluginlib_export_plugin_description_file(hardware_interface  hover_diffdrive.xml)
 
 # INSTALL
 install(

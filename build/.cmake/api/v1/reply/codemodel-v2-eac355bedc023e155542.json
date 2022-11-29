@@ -7,7 +7,7 @@
 				{
 					"build" : ".",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-.-Debug-83ce698845727c82af7f.json",
+					"jsonFile" : "directory-.-Debug-0fd97c234d283ae343f4.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.8"
@@ -17,7 +17,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -33,7 +34,8 @@
 					"targetIndexes" : 
 					[
 						0,
-						1
+						1,
+						2
 					]
 				}
 			],
@@ -41,15 +43,22 @@
 			[
 				{
 					"directoryIndex" : 0,
+					"id" : "hover_diffdrive::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-hover_diffdrive-Debug-4a269a25c3a9bc72e439.json",
+					"name" : "hover_diffdrive",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "hover_diffdrive_uninstall::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-hover_diffdrive_uninstall-Debug-ced746b07c737bf2f553.json",
+					"jsonFile" : "target-hover_diffdrive_uninstall-Debug-4da088cc3f21c3046602.json",
 					"name" : "hover_diffdrive_uninstall",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "uninstall::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-uninstall-Debug-74c69001c303ebc058da.json",
+					"jsonFile" : "target-uninstall-Debug-e971cd344f47dd8ff16d.json",
 					"name" : "uninstall",
 					"projectIndex" : 0
 				}

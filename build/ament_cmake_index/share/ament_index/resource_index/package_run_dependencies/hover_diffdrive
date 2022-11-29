@@ -1,1 +1,1 @@
-ament_lint_auto;ament_lint_common
+hardware_interface;pluginlib;rclcpp;rclcpp_lifecycle;ament_cmake_gtest

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "ros2_control_demo_hardware/diffbot_system.hpp"
-#include "ros2_control_demo_hardware/hover_comms.h"
+#include "hover_diffdrive/diffbot_system.hpp"
+#include "hover_diffdrive/hover_comms.h"
 #include <chrono>
 #include <cmath>
 #include <limits>
@@ -24,9 +24,9 @@
 #include "rclcpp/rclcpp.hpp"
 
 
-namespace ros2_control_demo_hardware
+namespace  hover_diffdrive
 {
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
+hardware_interface::CallbackReturn HoverDiffDrive::on_init(
   const hardware_interface::HardwareInfo & info)
 {
   if (
@@ -53,7 +53,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
     if (joint.command_interfaces.size() != 1)
     {
       RCLCPP_FATAL(
-        rclcpp::get_logger("DiffBotSystemHardware"),
+        rclcpp::get_logger("HoverDiffDrive"),
         "Joint '%s' has %zu command interfaces found. 1 expected.", joint.name.c_str(),
         joint.command_interfaces.size());
       return hardware_interface::CallbackReturn::ERROR;
@@ -62,7 +62,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
     if (joint.command_interfaces[0].name != hardware_interface::HW_IF_VELOCITY)
     {
       RCLCPP_FATAL(
-        rclcpp::get_logger("DiffBotSystemHardware"),
+        rclcpp::get_logger("HoverDiffDrive"),
         "Joint '%s' have %s command interfaces found. '%s' expected.", joint.name.c_str(),
         joint.command_interfaces[0].name.c_str(), hardware_interface::HW_IF_VELOCITY);
       return hardware_interface::CallbackReturn::ERROR;
@@ -71,7 +71,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
     if (joint.state_interfaces.size() != 2)
     {
       RCLCPP_FATAL(
-        rclcpp::get_logger("DiffBotSystemHardware"),
+        rclcpp::get_logger("HoverDiffDrive"),
         "Joint '%s' has %zu state interface. 2 expected.", joint.name.c_str(),
         joint.state_interfaces.size());
       return hardware_interface::CallbackReturn::ERROR;
@@ -80,7 +80,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
     if (joint.state_interfaces[0].name != hardware_interface::HW_IF_POSITION)
     {
       RCLCPP_FATAL(
-        rclcpp::get_logger("DiffBotSystemHardware"),
+        rclcpp::get_logger("HoverDiffDrive"),
         "Joint '%s' have '%s' as first state interface. '%s' expected.", joint.name.c_str(),
         joint.state_interfaces[0].name.c_str(), hardware_interface::HW_IF_POSITION);
       return hardware_interface::CallbackReturn::ERROR;
@@ -89,7 +89,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
     if (joint.state_interfaces[1].name != hardware_interface::HW_IF_VELOCITY)
     {
       RCLCPP_FATAL(
-        rclcpp::get_logger("DiffBotSystemHardware"),
+        rclcpp::get_logger("HoverDiffDrive"),
         "Joint '%s' have '%s' as second state interface. '%s' expected.", joint.name.c_str(),
         joint.state_interfaces[1].name.c_str(), hardware_interface::HW_IF_VELOCITY);
       return hardware_interface::CallbackReturn::ERROR;
@@ -99,7 +99,7 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_init(
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-std::vector<hardware_interface::StateInterface> DiffBotSystemHardware::export_state_interfaces()
+std::vector<hardware_interface::StateInterface> HoverDiffDrive::export_state_interfaces()
 {
   std::vector<hardware_interface::StateInterface> state_interfaces;
   for (auto i = 0u; i < info_.joints.size(); i++)
@@ -113,7 +113,7 @@ std::vector<hardware_interface::StateInterface> DiffBotSystemHardware::export_st
   return state_interfaces;
 }
 
-std::vector<hardware_interface::CommandInterface> DiffBotSystemHardware::export_command_interfaces()
+std::vector<hardware_interface::CommandInterface> HoverDiffDrive::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
   for (auto i = 0u; i < info_.joints.size(); i++)
@@ -125,19 +125,19 @@ std::vector<hardware_interface::CommandInterface> DiffBotSystemHardware::export_
   return command_interfaces;
 }
 
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
+hardware_interface::CallbackReturn HoverDiffDrive::on_activate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   
   hover_comms.setup();
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(rclcpp::get_logger("DiffBotSystemHardware"), "Activating ...please wait...");
+  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Activating ...please wait...");
 
   // for (auto i = 0; i < hw_start_sec_; i++)
   // {
   //   rclcpp::sleep_for(std::chrono::seconds(1));
   //   RCLCPP_INFO(
-  //     rclcpp::get_logger("DiffBotSystemHardware"), "%.1f seconds left...", hw_start_sec_ - i);
+  //     rclcpp::get_logger("HoverDiffDrive"), "%.1f seconds left...", hw_start_sec_ - i);
   // }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
@@ -152,31 +152,31 @@ hardware_interface::CallbackReturn DiffBotSystemHardware::on_activate(
     }
   }
 
-  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystemHardware"), "Successfully activated!");
+  RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Successfully activated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::CallbackReturn DiffBotSystemHardware::on_deactivate(
+hardware_interface::CallbackReturn HoverDiffDrive::on_deactivate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(rclcpp::get_logger("DiffBotSystemHardware"), "Deactivating ...please wait...");
+  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Deactivating ...please wait...");
 
   // for (auto i = 0; i < hw_stop_sec_; i++)
   // {
   //   rclcpp::sleep_for(std::chrono::seconds(1));
   //   RCLCPP_INFO(
-  //     rclcpp::get_logger("DiffBotSystemHardware"), "%.1f seconds left...", hw_stop_sec_ - i);
+  //     rclcpp::get_logger("HoverDiffDrive"), "%.1f seconds left...", hw_stop_sec_ - i);
   // }
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
-  RCLCPP_INFO(rclcpp::get_logger("DiffBotSystemHardware"), "Successfully deactivated!");
+  RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Successfully deactivated!");
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }
 
-hardware_interface::return_type DiffBotSystemHardware::read(
+hardware_interface::return_type HoverDiffDrive::read(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
 {
   double radius = 0.02;  // radius of the wheels
@@ -198,7 +198,7 @@ hardware_interface::return_type DiffBotSystemHardware::read(
 
   //   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   //   // RCLCPP_INFO(
-  //   //   rclcpp::get_logger("DiffBotSystemHardware"),
+  //   //   rclcpp::get_logger("HoverDiffDrive"),
   //   //   "Got position state %.5f and velocity state %.5f for '%s'!", hw_positions_[i],
   //   //   hw_velocities_[i], info_.joints[i].name.c_str());
   //   // END: This part here is for exemplary purposes - Please do not copy to your production code
@@ -215,36 +215,36 @@ hardware_interface::return_type DiffBotSystemHardware::read(
 
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   // RCLCPP_INFO(
-  //   rclcpp::get_logger("DiffBotSystemHardware"), "Joints successfully read! (%.5f,%.5f,%.5f)",
+  //   rclcpp::get_logger("HoverDiffDrive"), "Joints successfully read! (%.5f,%.5f,%.5f)",
   //   base_x_, base_y_, base_theta_);
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
   return hardware_interface::return_type::OK;
 }
 
-hardware_interface::return_type ros2_control_demo_hardware::DiffBotSystemHardware::write(
+hardware_interface::return_type  hover_diffdrive::HoverDiffDrive::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   double vel[2] = {hw_commands_[1], hw_commands_[0]};
   hover_comms.setMotorValues(vel);
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(rclcpp::get_logger("DiffBotSystemHardware"), "Writing...");
+  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Writing...");
 
   // for (auto i = 0u; i < hw_commands_.size(); i++)
   // {
   //   // Simulate sending commands to the hardware
   //   RCLCPP_INFO(
-  //     rclcpp::get_logger("DiffBotSystemHardware"), "Got command %.5f for '%s'!", hw_commands_[i],
+  //     rclcpp::get_logger("HoverDiffDrive"), "Got command %.5f for '%s'!", hw_commands_[i],
   //     info_.joints[i].name.c_str());
   // }
-  // RCLCPP_INFO(rclcpp::get_logger("DiffBotSystemHardware"), "Joints successfully written!");
+  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Joints successfully written!");
   // END: This part here is for exemplary purposes - Please do not copy to your production code
 
   return hardware_interface::return_type::OK;
 }
 
-}  // namespace ros2_control_demo_hardware
+}  // namespace  hover_diffdrive
 
 #include "pluginlib/class_list_macros.hpp"
 PLUGINLIB_EXPORT_CLASS(
-  ros2_control_demo_hardware::DiffBotSystemHardware, hardware_interface::SystemInterface)
+   hover_diffdrive::HoverDiffDrive, hardware_interface::SystemInterface)

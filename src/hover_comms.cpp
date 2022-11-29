@@ -8,7 +8,7 @@
 #include <chrono>
 #include <thread>
 
-#include "ros2_control_demo_hardware/hover_comms.h"
+#include "hover_diffdrive/hover_comms.h"
 
 using namespace LibSerial;
 

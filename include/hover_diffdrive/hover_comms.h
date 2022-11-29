@@ -1,5 +1,6 @@
-#ifndef HOVER_COMMS_H
-#define HOVER_COMMS_H
+
+#ifndef HOVER_COMMS_H_
+#define HOVER_COMMS_H_
 
 
 #include <cstring>
@@ -36,4 +37,4 @@ private:
 
 };
 
-#endif // HOVER_COMMS_H
+#endif // HOVER_COMMS_H_

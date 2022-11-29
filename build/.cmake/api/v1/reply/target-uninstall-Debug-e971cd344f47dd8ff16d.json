@@ -6,7 +6,8 @@
 		[
 			"add_custom_target",
 			"include",
-			"find_package"
+			"find_package",
+			"add_dependencies"
 		],
 		"files" : 
 		[
@@ -24,7 +25,7 @@
 			{
 				"command" : 2,
 				"file" : 4,
-				"line" : 9,
+				"line" : 14,
 				"parent" : 0
 			},
 			{
@@ -64,49 +65,31 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 40,
+				"line" : 35,
+				"parent" : 8
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 42,
 				"parent" : 8
 			}
 		]
 	},
-	"id" : "hover_diffdrive_uninstall::@6890427a1f51a3e7e1df",
-	"name" : "hover_diffdrive_uninstall",
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 10,
+			"id" : "hover_diffdrive_uninstall::@6890427a1f51a3e7e1df"
+		}
+	],
+	"id" : "uninstall::@6890427a1f51a3e7e1df",
+	"name" : "uninstall",
 	"paths" : 
 	{
 		"build" : ".",
 		"source" : "."
 	},
-	"sourceGroups" : 
-	[
-		{
-			"name" : "",
-			"sourceIndexes" : 
-			[
-				0
-			]
-		},
-		{
-			"name" : "CMake Rules",
-			"sourceIndexes" : 
-			[
-				1
-			]
-		}
-	],
-	"sources" : 
-	[
-		{
-			"backtrace" : 9,
-			"isGenerated" : true,
-			"path" : "build/CMakeFiles/hover_diffdrive_uninstall",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 0,
-			"isGenerated" : true,
-			"path" : "build/CMakeFiles/hover_diffdrive_uninstall.rule",
-			"sourceGroupIndex" : 1
-		}
-	],
+	"sources" : [],
 	"type" : "UTILITY"
 }

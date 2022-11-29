@@ -197,6 +197,67 @@ hover_diffdrive_uninstall/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive_uninstall.dir/build.make CMakeFiles/hover_diffdrive_uninstall.dir/build
 .PHONY : hover_diffdrive_uninstall/fast
 
+#=============================================================================
+# Target rules for targets named hover_diffdrive
+
+# Build rule for target.
+hover_diffdrive: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 hover_diffdrive
+.PHONY : hover_diffdrive
+
+# fast build rule for target.
+hover_diffdrive/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/build
+.PHONY : hover_diffdrive/fast
+
+src/diffbot_system.o: src/diffbot_system.cpp.o
+.PHONY : src/diffbot_system.o
+
+# target to build an object file
+src/diffbot_system.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/src/diffbot_system.cpp.o
+.PHONY : src/diffbot_system.cpp.o
+
+src/diffbot_system.i: src/diffbot_system.cpp.i
+.PHONY : src/diffbot_system.i
+
+# target to preprocess a source file
+src/diffbot_system.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/src/diffbot_system.cpp.i
+.PHONY : src/diffbot_system.cpp.i
+
+src/diffbot_system.s: src/diffbot_system.cpp.s
+.PHONY : src/diffbot_system.s
+
+# target to generate assembly for a file
+src/diffbot_system.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/src/diffbot_system.cpp.s
+.PHONY : src/diffbot_system.cpp.s
+
+src/hover_comms.o: src/hover_comms.cpp.o
+.PHONY : src/hover_comms.o
+
+# target to build an object file
+src/hover_comms.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/src/hover_comms.cpp.o
+.PHONY : src/hover_comms.cpp.o
+
+src/hover_comms.i: src/hover_comms.cpp.i
+.PHONY : src/hover_comms.i
+
+# target to preprocess a source file
+src/hover_comms.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/src/hover_comms.cpp.i
+.PHONY : src/hover_comms.cpp.i
+
+src/hover_comms.s: src/hover_comms.cpp.s
+.PHONY : src/hover_comms.s
+
+# target to generate assembly for a file
+src/hover_comms.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/hover_diffdrive.dir/build.make CMakeFiles/hover_diffdrive.dir/src/hover_comms.cpp.s
+.PHONY : src/hover_comms.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -212,6 +273,13 @@ help:
 	@echo "... test"
 	@echo "... hover_diffdrive_uninstall"
 	@echo "... uninstall"
+	@echo "... hover_diffdrive"
+	@echo "... src/diffbot_system.o"
+	@echo "... src/diffbot_system.i"
+	@echo "... src/diffbot_system.s"
+	@echo "... src/hover_comms.o"
+	@echo "... src/hover_comms.i"
+	@echo "... src/hover_comms.s"
 .PHONY : help
 
 
