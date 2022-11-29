@@ -1,0 +1,4 @@
+source;share/hover_diffdrive/local_setup.bash
+source;share/hover_diffdrive/local_setup.dsv
+source;share/hover_diffdrive/local_setup.sh
+source;share/hover_diffdrive/local_setup.zsh
