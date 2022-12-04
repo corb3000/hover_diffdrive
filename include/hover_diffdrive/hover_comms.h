@@ -9,7 +9,7 @@
 #include "protocol.h"
 #include "config.h"
 
-// using namespace LibSerial ;
+using namespace LibSerial ;
 
 class HoverComms
 {
@@ -21,7 +21,7 @@ public:
   void setMotorValues(double joints [2]);
   std::string sendMsg(const std::string &msg_to_send, bool print_output = false);
 
-  LibSerial::SerialPort  serial_conn; //< Underlying serial connection
+  SerialPort  serial_conn; //< Underlying serial connection
 
   SerialFeedback read_msg;
   SerialCommand write_msg;

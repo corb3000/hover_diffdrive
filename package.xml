@@ -13,6 +13,8 @@
   <depend>pluginlib</depend>
   <depend>rclcpp</depend>
   <depend>rclcpp_lifecycle</depend>
+  <depend>libserial-dev</depend>
+
 
   <test_depend>ament_cmake_gtest</test_depend>
 
@@ -20,3 +22,4 @@
     <build_type>ament_cmake</build_type>
   </export>
 </package>
+
