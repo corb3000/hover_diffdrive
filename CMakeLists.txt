@@ -19,7 +19,7 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(rclcpp_components REQUIRED)
 
 
-# target_link_libraries(${PROJECT_NAME} serial) 
+
 
 ## COMPILE
 add_library(
@@ -29,11 +29,16 @@ add_library(
   src/hover_comms.cpp
 
 )
+
+target_link_libraries(${PROJECT_NAME} serial) 
+
 target_include_directories(
   ${PROJECT_NAME}
   PRIVATE
   include
 )
+
+
 ament_target_dependencies(
   ${PROJECT_NAME}
   hardware_interface
@@ -42,7 +47,7 @@ ament_target_dependencies(
   rclcpp
   rclcpp_lifecycle
   # libserial-dev
-  # serial
+  serial
   # libserial
 )
 
