@@ -182,7 +182,7 @@ hardware_interface::return_type HoverDiffDrive::read(
   double radius = 0.02;  // radius of the wheels
   double dist_w = 0.1;   // distance between the wheels
   SerialFeedback read_msg = hover_comms.readValues();
-  hw_positions_[0] =  6.3 * (read_msg.wheelR_cnt + (read_msg.wheelR_multR * ENCODER_MAX)) / TICKS_PER_ROTATION ; // 0 is Right
+  hw_positions_[0] =  M_PI * 2 * (read_msg.wheelR_cnt + (read_msg.wheelR_multR * ENCODER_MAX)) / TICKS_PER_ROTATION ; // 0 is Right
   hw_velocities_[0] = read_msg.speedR_meas * 0.10472;  // convert rpm to Rad/s
   hw_positions_[1] =  M_PI * 2 * (read_msg.wheelL_cnt + (read_msg.wheelL_multL * ENCODER_MAX))/TICKS_PER_ROTATION ;// 1 is Left
   hw_velocities_[1] = read_msg.speedL_meas * 0.10472;  // convert rpm to Rad/s
