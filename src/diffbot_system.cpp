@@ -213,10 +213,6 @@ hardware_interface::return_type HoverDiffDrive::read(
   base_y_ += base_dy * period.seconds();
   base_theta_ += base_dtheta * period.seconds();
 
-  std::cerr << "read " << hw_positions_[0] << " " << hw_positions_[1] << " " << hw_velocities_[0] << " " << hw_velocities_[1] << " \n" ;
-
-
-
 
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   // RCLCPP_INFO(
