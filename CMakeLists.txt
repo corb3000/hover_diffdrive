@@ -46,9 +46,7 @@ ament_target_dependencies(
   pluginlib
   rclcpp
   rclcpp_lifecycle
-  # libserial-dev
-  serial
-  # libserial
+  # serial
 )
 
 # Causes the visibility macros to use dllexport rather than dllimport,

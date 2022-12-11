@@ -19,6 +19,7 @@
 #include <limits>
 #include <memory>
 #include <vector>
+#include <iostream>
 
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -38,7 +39,6 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
   base_x_ = 0.0;
   base_y_ = 0.0;
   base_theta_ = 0.0;
-
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   // hw_start_sec_ = std::stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
   // hw_stop_sec_ = std::stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
@@ -54,16 +54,16 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("HoverDiffDrive"),
-        "Joint '%s' has %zu command interfaces found. 1 expected.", joint.name.c_str(),
+        "1Joint '%s' has %zu command interfaces found. 1 expected.", joint.name.c_str(),
         joint.command_interfaces.size());
       return hardware_interface::CallbackReturn::ERROR;
     }
-
+    
     if (joint.command_interfaces[0].name != hardware_interface::HW_IF_VELOCITY)
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("HoverDiffDrive"),
-        "Joint '%s' have %s command interfaces found. '%s' expected.", joint.name.c_str(),
+        "2Joint '%s' have %s command interfaces found. '%s' expected.", joint.name.c_str(),
         joint.command_interfaces[0].name.c_str(), hardware_interface::HW_IF_VELOCITY);
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -72,7 +72,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("HoverDiffDrive"),
-        "Joint '%s' has %zu state interface. 2 expected.", joint.name.c_str(),
+        "3Joint '%s' has %zu state interface. 2 expected.", joint.name.c_str(),
         joint.state_interfaces.size());
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -81,7 +81,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("HoverDiffDrive"),
-        "Joint '%s' have '%s' as first state interface. '%s' expected.", joint.name.c_str(),
+        "4Joint '%s' have '%s' as first state interface. '%s' expected.", joint.name.c_str(),
         joint.state_interfaces[0].name.c_str(), hardware_interface::HW_IF_POSITION);
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -90,7 +90,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
     {
       RCLCPP_FATAL(
         rclcpp::get_logger("HoverDiffDrive"),
-        "Joint '%s' have '%s' as second state interface. '%s' expected.", joint.name.c_str(),
+        "5Joint '%s' have '%s' as second state interface. '%s' expected.", joint.name.c_str(),
         joint.state_interfaces[1].name.c_str(), hardware_interface::HW_IF_VELOCITY);
       return hardware_interface::CallbackReturn::ERROR;
     }
@@ -182,9 +182,9 @@ hardware_interface::return_type HoverDiffDrive::read(
   double radius = 0.02;  // radius of the wheels
   double dist_w = 0.1;   // distance between the wheels
   SerialFeedback read_msg = hover_comms.readValues();
-  hw_positions_[0] =  (read_msg.wheelR_cnt + (read_msg.wheelR_multR * ENCODER_MAX))/TICKS_PER_ROTATION * M_PI * 2; // 0 is Right
+  hw_positions_[0] =  6.3 * (read_msg.wheelR_cnt + (read_msg.wheelR_multR * ENCODER_MAX)) / TICKS_PER_ROTATION ; // 0 is Right
   hw_velocities_[0] = read_msg.speedR_meas * 0.10472;  // convert rpm to Rad/s
-  hw_positions_[1] =  (read_msg.wheelL_cnt + (read_msg.wheelL_multL * ENCODER_MAX))/TICKS_PER_ROTATION * M_PI * 2;// 1 is Left
+  hw_positions_[1] =  M_PI * 2 * (read_msg.wheelL_cnt + (read_msg.wheelL_multL * ENCODER_MAX))/TICKS_PER_ROTATION ;// 1 is Left
   hw_velocities_[1] = read_msg.speedL_meas * 0.10472;  // convert rpm to Rad/s
 
   // for (uint i = 0; i < hw_commands_.size(); i++)
@@ -212,6 +212,11 @@ hardware_interface::return_type HoverDiffDrive::read(
   base_x_ += base_dx * period.seconds();
   base_y_ += base_dy * period.seconds();
   base_theta_ += base_dtheta * period.seconds();
+
+  std::cerr << "read " << hw_positions_[0] << " " << hw_positions_[1] << " " << hw_velocities_[0] << " " << hw_velocities_[1] << " \n" ;
+
+
+
 
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   // RCLCPP_INFO(

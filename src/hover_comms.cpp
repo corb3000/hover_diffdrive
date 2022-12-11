@@ -39,6 +39,7 @@ SerialFeedback HoverComms::readValues()
     u_int8_t byte1;
     u_int8_t byte0;
     DataBuffer read_buffer;
+    serial_conn.FlushInputBuffer();
     try
     {
         do{
