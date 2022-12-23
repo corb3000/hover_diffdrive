@@ -8,7 +8,7 @@ Hoverboard shoud be using modified [firmware](https://github.com/alex-makarov/ho
 
 ## Usage
 
-1. Hoverboard port can be set as a "port" parameter in the config file
+1. Hoverboard port and Baudrate can be set in the config.h
 
 
 
