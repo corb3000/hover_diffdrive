@@ -11,7 +11,7 @@ Hoverboard shoud be using modified [firmware](https://github.com/alex-makarov/ho
 1. Hoverboard port and Baudrate can be set in the config.h
 
 ## Dependenies
-1.  The Comms use [libserial](https://github.com/crayzeewulf/libserial) use 'sudo apt install libserial-dev' to instal.
+1.  The Comms use [libserial](https://github.com/crayzeewulf/libserial) use 'sudo apt install libserial-dev' to install.
 
 ## DISCLAIMER
 I bear **no responsibility** for any damage, direct or indirect, caused by using this project. Hoverboards are powerful and can be dangerous! Make sure you take all safety precautions!
