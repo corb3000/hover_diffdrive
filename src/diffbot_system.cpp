@@ -23,10 +23,28 @@
 
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+#include <rclcpp_components/register_node_macro.hpp>
 
 
 namespace  hover_diffdrive
 {
+HardwarePub::HardwarePub() : Node("hardware_publisher")
+{
+  voltage_pub_   = this->create_publisher<std_msgs::msg::Float64>("hover_diffdrive/battery_voltage", 10);
+  temp_pub_      = this->create_publisher<std_msgs::msg::Float64>("hover_diffdrive/temperature", 10);
+}
+
+void HardwarePub::publishData(double v, double t)
+{
+  auto message_v = std_msgs::msg::Float64();
+  auto message_t = std_msgs::msg::Float64();
+  message_v.data = v;
+  message_t.data = t;
+  voltage_pub_->publish(message_v);
+  temp_pub_->publish(message_t);
+}
+
 hardware_interface::CallbackReturn HoverDiffDrive::on_init(
   const hardware_interface::HardwareInfo & info)
 {
@@ -39,10 +57,8 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
   base_x_ = 0.0;
   base_y_ = 0.0;
   base_theta_ = 0.0;
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // hw_start_sec_ = std::stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
-  // hw_stop_sec_ = std::stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  hw_pub_ = std::make_shared<HardwarePub>();  //fire up the publisher node
+
   hw_positions_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
   hw_velocities_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
   hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
@@ -130,16 +146,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_activate(
 {
   
   hover_comms.setup();
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Activating ...please wait...");
 
-  // for (auto i = 0; i < hw_start_sec_; i++)
-  // {
-  //   rclcpp::sleep_for(std::chrono::seconds(1));
-  //   RCLCPP_INFO(
-  //     rclcpp::get_logger("HoverDiffDrive"), "%.1f seconds left...", hw_start_sec_ - i);
-  // }
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
 
   // set some default values
   for (auto i = 0u; i < hw_positions_.size(); i++)
@@ -160,16 +167,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_activate(
 hardware_interface::CallbackReturn HoverDiffDrive::on_deactivate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Deactivating ...please wait...");
 
-  // for (auto i = 0; i < hw_stop_sec_; i++)
-  // {
-  //   rclcpp::sleep_for(std::chrono::seconds(1));
-  //   RCLCPP_INFO(
-  //     rclcpp::get_logger("HoverDiffDrive"), "%.1f seconds left...", hw_stop_sec_ - i);
-  // }
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
 
   RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Successfully deactivated!");
 
@@ -196,12 +194,6 @@ hardware_interface::return_type HoverDiffDrive::read(
   //   hw_positions_[i] = hw_positions_[1] + period.seconds() * hw_commands_[i];
   //   hw_velocities_[i] = hw_commands_[i];
 
-  //   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  //   // RCLCPP_INFO(
-  //   //   rclcpp::get_logger("HoverDiffDrive"),
-  //   //   "Got position state %.5f and velocity state %.5f for '%s'!", hw_positions_[i],
-  //   //   hw_velocities_[i], info_.joints[i].name.c_str());
-  //   // END: This part here is for exemplary purposes - Please do not copy to your production code
   // }
 
   // Update the free-flyer, i.e. the base notation using the classical
@@ -213,12 +205,9 @@ hardware_interface::return_type HoverDiffDrive::read(
   base_y_ += base_dy * period.seconds();
   base_theta_ += base_dtheta * period.seconds();
 
-
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(
-  //   rclcpp::get_logger("HoverDiffDrive"), "Joints successfully read! (%.5f,%.5f,%.5f)",
-  //   base_x_, base_y_, base_theta_);
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
+  double v = read_msg.batVoltage/100.0;
+  double t = read_msg.boardTemp/10.0;
+  hw_pub_->publishData(v, t);  //publish to topic
 
   return hardware_interface::return_type::OK;
 }
@@ -228,18 +217,7 @@ hardware_interface::return_type  hover_diffdrive::HoverDiffDrive::write(
 {
   double vel[2] = {hw_commands_[1], hw_commands_[0]};
   hover_comms.setMotorValues(vel);
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Writing...");
 
-  // for (auto i = 0u; i < hw_commands_.size(); i++)
-  // {
-  //   // Simulate sending commands to the hardware
-  //   RCLCPP_INFO(
-  //     rclcpp::get_logger("HoverDiffDrive"), "Got command %.5f for '%s'!", hw_commands_[i],
-  //     info_.joints[i].name.c_str());
-  // }
-  // RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Joints successfully written!");
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
 
   return hardware_interface::return_type::OK;
 }
