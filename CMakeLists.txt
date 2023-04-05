@@ -15,13 +15,9 @@ find_package(ament_cmake REQUIRED)
 find_package(hardware_interface REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(robot_interfaces REQUIRED)
 find_package(rclcpp_lifecycle REQUIRED)
 find_package(rclcpp_components REQUIRED)
-
-
-
-
-
 
 ## COMPILE
 add_library(
@@ -48,7 +44,8 @@ ament_target_dependencies(
   pluginlib
   rclcpp
   rclcpp_lifecycle
-  # serial
+  robot_interfaces 
+
 )
 
 # Causes the visibility macros to use dllexport rather than dllimport,
@@ -71,6 +68,10 @@ install(
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
 endif()
+
+rosidl_get_typesupport_target(cpp_typesupport_target
+  ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
 
 ## EXPORTS
 ament_export_include_directories(

@@ -23,7 +23,9 @@
 #include "hardware_interface/hardware_info.hpp"
 #include "hardware_interface/system_interface.hpp"
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
-#include "rclcpp/rclcpp.hpp"
+#include "rclcpp/rclcpp.hpp" 
+#include "robot_interfaces/msg/motor_status.hpp"
+
 #include "rclcpp/clock.hpp"
 #include "rclcpp/duration.hpp"
 #include "rclcpp/macros.hpp"
@@ -32,9 +34,8 @@
 #include "rclcpp_lifecycle/state.hpp"
 #include "hover_diffdrive/visibility_control.h"
 #include "hover_comms.h"
-#include "std_msgs/msg/string.hpp"
-#include "std_msgs/msg/float64.hpp"
 
+ 
 
 
 namespace  hover_diffdrive
@@ -47,11 +48,7 @@ class HardwarePub : public rclcpp::Node  //the node definition for the publisher
     void publishData(double, double);
 
   private:
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr voltage_pub_;
-    rclcpp::Publisher<std_msgs::msg::Float64>::SharedPtr temp_pub_;
-
-
+    rclcpp::Publisher<robot_interfaces::msg::MotorStatus>::SharedPtr status_pub_;
 };
 
 

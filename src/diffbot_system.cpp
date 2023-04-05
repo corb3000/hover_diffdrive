@@ -31,18 +31,15 @@ namespace  hover_diffdrive
 {
 HardwarePub::HardwarePub() : Node("hardware_publisher")
 {
-  voltage_pub_   = this->create_publisher<std_msgs::msg::Float64>("hover_diffdrive/battery_voltage", 10);
-  temp_pub_      = this->create_publisher<std_msgs::msg::Float64>("hover_diffdrive/temperature", 10);
+  status_pub_   = this->create_publisher<robot_interfaces::msg::MotorStatus>("hover_diffdrive/status", 10);
 }
 
 void HardwarePub::publishData(double v, double t)
 {
-  auto message_v = std_msgs::msg::Float64();
-  auto message_t = std_msgs::msg::Float64();
-  message_v.data = v;
-  message_t.data = t;
-  voltage_pub_->publish(message_v);
-  temp_pub_->publish(message_t);
+  auto message = robot_interfaces::msg::MotorStatus();
+  message.voltage = v;
+  message.temp = t;
+  status_pub_->publish(message);
 }
 
 hardware_interface::CallbackReturn HoverDiffDrive::on_init(
