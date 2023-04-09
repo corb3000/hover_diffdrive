@@ -47,7 +47,7 @@ class HardwarePub : public rclcpp::Node  //the node definition for the publisher
   public:
     HardwarePub();
     void publishData(double, double);
-    void publishDebugData(int64_t, int64_t, int64_t, int64_t, int64_t, int64_t);
+    void publishDebugData(int16_t, int16_t, int16_t, int16_t, int16_t, int16_t);
 
   private:
     rclcpp::Publisher<robot_interfaces::msg::MotorStatus>::SharedPtr status_pub_;
