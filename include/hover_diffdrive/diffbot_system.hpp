@@ -25,6 +25,7 @@
 #include "hardware_interface/types/hardware_interface_return_values.hpp"
 #include "rclcpp/rclcpp.hpp" 
 #include "robot_interfaces/msg/motor_status.hpp"
+#include "robot_interfaces/msg/motor_debug.hpp"
 
 #include "rclcpp/clock.hpp"
 #include "rclcpp/duration.hpp"
@@ -46,9 +47,11 @@ class HardwarePub : public rclcpp::Node  //the node definition for the publisher
   public:
     HardwarePub();
     void publishData(double, double);
+    void publishDebugData(int64_t, int64_t, int64_t, int64_t, int64_t, int64_t);
 
   private:
     rclcpp::Publisher<robot_interfaces::msg::MotorStatus>::SharedPtr status_pub_;
+    rclcpp::Publisher<robot_interfaces::msg::MotorDebug>::SharedPtr debug_pub_;
 };
 
 

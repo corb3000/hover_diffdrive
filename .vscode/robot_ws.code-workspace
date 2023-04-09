@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"ros.distro": "humble",
+		"python.autoComplete.extraPaths": [
+			"/home/bigshark/dev/robot_ws/install/power_service/lib/python3.10/site-packages",
+			"/home/bigshark/dev/robot_ws/install/robot_interfaces/local/lib/python3.10/dist-packages",
+			"/opt/ros/humble/lib/python3.10/site-packages",
+			"/opt/ros/humble/local/lib/python3.10/dist-packages"
+		],
+		"python.analysis.extraPaths": [
+			"/home/bigshark/dev/robot_ws/install/power_service/lib/python3.10/site-packages",
+			"/home/bigshark/dev/robot_ws/install/robot_interfaces/local/lib/python3.10/dist-packages",
+			"/opt/ros/humble/lib/python3.10/site-packages",
+			"/opt/ros/humble/local/lib/python3.10/dist-packages"
+		]
+	}
+}

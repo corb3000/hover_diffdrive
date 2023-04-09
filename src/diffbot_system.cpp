@@ -23,7 +23,7 @@
 
 #include "hardware_interface/types/hardware_interface_type_values.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
+// #include "std_msgs/msg/string.hpp"
 #include <rclcpp_components/register_node_macro.hpp>
 
 
@@ -33,6 +33,7 @@ namespace  hover_diffdrive
 HardwarePub::HardwarePub() : Node("hardware_publisher")
 {
   status_pub_   = this->create_publisher<robot_interfaces::msg::MotorStatus>("hover_diffdrive/status", 10);
+  debug_pub_   = this->create_publisher<robot_interfaces::msg::MotorDebug>("hover_diffdrive/debug", 10);
 }
 
 void HardwarePub::publishData(double v, double t)
@@ -41,6 +42,18 @@ void HardwarePub::publishData(double v, double t)
   message.voltage = v;
   message.temp = t;
   status_pub_->publish(message);
+}
+void HardwarePub::publishDebugData(int64_t sl, int64_t sr, int64_t cl, int64_t cr, int64_t clx, int64_t crx)
+{
+  auto message = robot_interfaces::msg::MotorDebug();
+  message.speedr = sr;
+  message.speedl = sl;
+  message.wheelr = cr;
+  message.wheell = cl;
+  message.wheelrx = crx;
+  message.wheellx = clx;
+
+  debug_pub_->publish(message);
 }
 
 hardware_interface::CallbackReturn HoverDiffDrive::on_init(
@@ -206,6 +219,7 @@ hardware_interface::return_type HoverDiffDrive::read(
   double v = read_msg.batVoltage/100.0;
   double t = read_msg.boardTemp/10.0;
   hw_pub_->publishData(v, t);  //publish to topic
+  hw_pub_->publishDebugData(read_msg.speedR_meas, read_msg.speedL_meas, read_msg.wheelR_cnt, read_msg.wheelL_cnt, read_msg.wheelR_multR, read_msg.wheelL_multL);  //publish debug to topic
 
   return hardware_interface::return_type::OK;
 }
