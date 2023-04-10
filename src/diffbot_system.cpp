@@ -43,7 +43,7 @@ void HardwarePub::publishData(double v, double t)
   message.temp = t;
   status_pub_->publish(message);
 }
-void HardwarePub::publishDebugData(int16_t sl, int16_t sr, int16_t cl, int16_t cr, int16_t clx, int16_t crx)
+void HardwarePub::publishDebugData(int16_t sr, int16_t sl, int16_t cr, int16_t cl, int16_t crx, int16_t clx)
 {
   auto message = robot_interfaces::msg::MotorDebug();
   message.speedr = sr;
