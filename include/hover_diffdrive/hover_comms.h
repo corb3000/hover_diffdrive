@@ -17,6 +17,7 @@ class HoverComms
 public:
  
   void setup();
+  void shutdown();
   SerialFeedback readValues();
   void setMotorValues(double joints [2]);
   std::string sendMsg(const std::string &msg_to_send, bool print_output = false);

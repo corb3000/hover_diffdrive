@@ -32,6 +32,10 @@ void HoverComms::setup()
 
 }
 
+void HoverComms::shutdown()
+{  
+    serial_conn.Close();
+}
 
 SerialFeedback HoverComms::readValues()
 {
@@ -55,6 +59,7 @@ SerialFeedback HoverComms::readValues()
     catch(const std::exception& e)
     {
         std::cerr << "Serial read fialure " << e.what()  << '\n';
+        read_msg.start = 0;
         return read_msg; //error!
     }
         read_msg.start =  start;
@@ -83,6 +88,7 @@ SerialFeedback HoverComms::readValues()
         read_msg.cmdLed))
     {
             std::cerr << "Serial checksum error "  << '\n';
+            read_msg.start = 0;
             return read_msg; //error!
     }
     encoder_update(read_msg.wheelR_cnt, read_msg.wheelL_cnt);

@@ -65,9 +65,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_init(
   {
     return hardware_interface::CallbackReturn::ERROR;
   }
-  base_x_ = 0.0;
-  base_y_ = 0.0;
-  base_theta_ = 0.0;
+
   hw_pub_ = std::make_shared<HardwarePub>();  //fire up the publisher node
 
   hw_positions_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
@@ -179,6 +177,7 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_deactivate(
   const rclcpp_lifecycle::State & /*previous_state*/)
 {
 
+  hover_comms.shutdown();
 
   RCLCPP_INFO(rclcpp::get_logger("HoverDiffDrive"), "Successfully deactivated!");
 
@@ -186,35 +185,17 @@ hardware_interface::CallbackReturn HoverDiffDrive::on_deactivate(
 }
 
 hardware_interface::return_type HoverDiffDrive::read(
-  const rclcpp::Time & /*time*/, const rclcpp::Duration & period)
+  const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
-  double radius = 0.02;  // radius of the wheels
-  double dist_w = 0.1;   // distance between the wheels
   SerialFeedback read_msg = hover_comms.readValues();
+  if (read_msg.start == 0)
+  {
+    return hardware_interface::return_type::ERROR;
+  }
   hw_positions_[0] =  M_PI * 2 * (read_msg.wheelR_cnt + (read_msg.wheelR_multR * ENCODER_MAX)) / TICKS_PER_ROTATION ; // 0 is Right
   hw_velocities_[0] = read_msg.speedR_meas * 0.10472;  // convert rpm to Rad/s
   hw_positions_[1] =  M_PI * 2 * (read_msg.wheelL_cnt + (read_msg.wheelL_multL * ENCODER_MAX))/TICKS_PER_ROTATION ;// 1 is Left
   hw_velocities_[1] = read_msg.speedL_meas * 0.10472;  // convert rpm to Rad/s
-
-  // for (uint i = 0; i < hw_commands_.size(); i++)
-  // {
-    
-  //   // Simulate DiffBot wheels's movement as a first-order system
-  //   // Update the joint status: this is a revolute joint without any limit.
-  //   // Simply integrates
-  //   hw_positions_[i] = hw_positions_[1] + period.seconds() * hw_commands_[i];
-  //   hw_velocities_[i] = hw_commands_[i];
-
-  // }
-
-  // Update the free-flyer, i.e. the base notation using the classical
-  // wheel differentiable kinematics
-  double base_dx = 0.5 * radius * (hw_commands_[0] + hw_commands_[1]) * cos(base_theta_);
-  double base_dy = 0.5 * radius * (hw_commands_[0] + hw_commands_[1]) * sin(base_theta_);
-  double base_dtheta = radius * (hw_commands_[0] - hw_commands_[1]) / dist_w;
-  base_x_ += base_dx * period.seconds();
-  base_y_ += base_dy * period.seconds();
-  base_theta_ += base_dtheta * period.seconds();
 
   double v = read_msg.batVoltage/100.0;
   double t = read_msg.boardTemp/10.0;

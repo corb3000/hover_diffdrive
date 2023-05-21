@@ -89,17 +89,11 @@ public:
   std::shared_ptr<HardwarePub> hw_pub_;    //make the publisher node a member
 
 private:
-  // Parameters for the DiffBot simulation
-  double hw_start_sec_;
-  double hw_stop_sec_;
 
   // Store the command for the simulated robot
   std::vector<double> hw_commands_;
   std::vector<double> hw_positions_;
   std::vector<double> hw_velocities_;
-
-  // Store the wheeled robot position
-  double base_x_, base_y_, base_theta_;
 
   HoverComms hover_comms;
 };
